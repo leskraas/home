@@ -1,0 +1,28 @@
+{
+  "name": "CoockBook",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "resolutions": {
+    "webpack": "^5.2.0",
+    "next": "^10.0.0"
+  },
+  "dependencies": {
+    "next": "10.0.1",
+    "next-compose-plugins": "2.2.0",
+    "react": "17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@sanity/client": "^2.0.9",
+    "@types/next": "^9.0.0",
+    "@types/node": "^14.14.6",
+    "@types/react": "^16.9.56",
+    "@zeit/next-typescript": "^1.1.1",
+    "typescript": "^4.0.5"
+  }
+}
