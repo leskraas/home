@@ -1,5 +1,3 @@
-import { Asset, Image } from '../articles/types';
-
 interface SanityImageUrl {
   image: (source: Asset | Image) => SanityImageUrl;
   dataset: (dataset: string) => SanityImageUrl;
@@ -24,7 +22,7 @@ interface SanityImageUrl {
   flipHorizontal: () => SanityImageUrl;
   flipVertical: () => SanityImageUrl;
   crop: (mode: any) => SanityImageUrl;
-  fit: (value: any) => SanityImageUrl;
+  fit: (value: 'clip'|'crop'|'fill'|'fillmax'|'max'|'scale'|'min') => SanityImageUrl;
   ignoreImageParams: () => SanityImageUrl;
   url: () => string;
   toString: () => string;

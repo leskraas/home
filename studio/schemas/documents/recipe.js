@@ -7,7 +7,7 @@ export default {
     type: 'document',
     fields: [
         {
-            name: 'title',
+            name: 'name',
             title: 'Title',
             type: 'string',
             validation: Rule => Rule.required()
@@ -108,7 +108,7 @@ export default {
     }),
     preview: {
         select: {
-            title: 'title',
+            title: 'name',
             author: 'author.name',
             media: 'mainImage'
         },

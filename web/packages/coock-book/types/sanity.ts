@@ -1,0 +1,65 @@
+export interface IRecipeShort {
+    _id: string;
+    name: string;
+    slug: ISlug;
+    mainImage: IImage;
+    time: ITime,
+    difficulty: number,
+    ingredients: string[],
+}
+
+export interface ITime {
+    hour: number;
+    minutes: number;
+}
+
+export interface ISlug {
+    _type: 'slug';
+    current: string;
+}
+
+export interface IImage {
+    _type: 'image';
+    _id?: string;
+    _key: string;
+    asset: IAsset;
+    crop?: ICrop;
+    hotspot?: IHotspot;
+}
+
+interface IAsset {
+    _ref: string;
+    _type: 'reference';
+    _id?: string;
+}
+
+interface ICrop {
+    _type: 'sanity.imageCrop';
+    bottom: number;
+    left: number;
+    right: number;
+    top: number;
+}
+
+interface IHotspot {
+    _type: 'sanity.imageHotspot';
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+}
+
+export interface ICategory{
+    _id:string;
+    _type:'category';
+    name:string;
+}
+
+export interface IGrocery{
+    _id:string
+    _rev:string
+    _type:"grocery"
+    image: IImage
+    isFromKitchen:boolean
+    name: string
+}
