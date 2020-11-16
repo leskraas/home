@@ -55,9 +55,9 @@ export default {
             options: {
                 layout: 'radio',
                 list: [
-                    { title: 'Enkel', value: 'easy' },
-                    { title: 'Middels', value: 'medium' },
-                    { title: 'Vanskelig', value: 'hard' }
+                    { title: 'Enkel', value: 'Enkel' },
+                    { title: 'Middels', value: 'Middels' },
+                    { title: 'Vanskelig', value: 'Middels' }
                 ]
             },
             validation: Rule => Rule.required()

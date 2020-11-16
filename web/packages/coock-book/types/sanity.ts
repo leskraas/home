@@ -1,11 +1,37 @@
-export interface IRecipeShort {
+
+export interface IRecipe {
     _id: string;
-    name: string;
+    _type:'recipe';
     slug: ISlug;
-    mainImage: IImage;
-    time: ITime,
-    difficulty: number,
-    ingredients: string[],
+    difficulty: 'Enkel'| 'Middels'| 'Middels';
+    ingredients: IIngredient[];
+    mainImage?: IImage;
+    method: IMethodStep[];
+    name: string;
+    serves: number;
+    tags: ICategory[];
+    time: ITime;
+}
+
+
+export interface IMethodStep {
+    _key:string;
+    _type:'methodStep';
+    stepIngredients?: string[];
+    stepText:string;
+}
+
+export interface IIngredient {
+    _type: 'ingredient';
+    _key: string;
+    name: IGrocery;
+    quantity: IQuantity;
+    extendedText?: string;
+}
+
+export interface IQuantity {
+    amount: number;
+    unit: 'ss' | 'ts' | 'dl' | 'ml' | 'l' | 'g' | 'stykk' | 'boks';
 }
 
 export interface ITime {
@@ -49,17 +75,16 @@ interface IHotspot {
     y: number;
 }
 
-export interface ICategory{
-    _id:string;
-    _type:'category';
-    name:string;
+export interface ICategory {
+    _id: string;
+    _type: 'category';
+    name: string;
 }
 
-export interface IGrocery{
-    _id:string
-    _rev:string
-    _type:"grocery"
+export interface IGrocery {
+    _id: string
+    _type: "grocery"
     image: IImage
-    isFromKitchen:boolean
+    isFromKitchen: boolean
     name: string
 }

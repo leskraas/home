@@ -15,7 +15,7 @@ interface IProps {
 export const Category: NextPage<IProps> = ({categories}) => {
     return (
         <CategoryWrapper>
-            {categories && categories.map((category) => (
+            {categories && categories.map((category: ICategory) => (
                 <CategoryButton key={category._id}>
                     {category.name}
                 </CategoryButton>))}

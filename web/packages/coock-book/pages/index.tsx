@@ -4,7 +4,7 @@ import {Card} from "../components/card/Card";
 import styled from "styled-components";
 import {colors} from "../shared/Colors";
 import client from "../client";
-import {ICategory, IGrocery, IRecipeShort} from "../types/sanity";
+import {ICategory, IGrocery, IRecipe} from "../types/sanity";
 import {NextPage} from "next";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {Box, Tab, Tabs, TextField} from "@material-ui/core";
@@ -19,33 +19,43 @@ const categoryQuery = `*[_type == "category"] | order(name asc){
 
 const groceryQuery = `*[_type == "grocery"] | order(name asc){
     _id,
-    _rev,
     _type,
-    image,
+    image{
+        assets->{
+            _id,
+            url
+        }
+    },
     isFromKitchen,
     name,
 }`;
 
-const inspoRecipesQuery = `*[_type == "recipe"]{
+const recipeQuery = `*[_type == "recipe"]{
     _id,
-    name,
+    _type,
     slug,
+    difficulty,
+    ingredients[]{
+        _key,
+        _type,
+        name-> {
+            ...
+        }
+    },
     mainImage{
         asset->{
             _id,
             url,
         }
     },
+    method,
+    name,
+    serves,
+    tags,
     time,
-    difficulty,
-    ingredients,
-}[0]`;
+}`;
 
-interface IProps {
-    inspoRecipes: IRecipeShort;
-    categories: ICategory[];
-    searchOptions: {name: string}[];
-}
+
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -74,7 +84,14 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-const CookBook: NextPage<IProps> = ({inspoRecipes, categories, searchOptions}) => {
+interface IProps {
+    inspoRecipes: IRecipe;
+    recipes: IRecipe[];
+    categories: ICategory[];
+    searchOptions: {name: string}[];
+}
+
+const CookBook: NextPage<IProps> = ({inspoRecipes, categories, searchOptions, recipes}) => {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -141,13 +158,14 @@ const CookBook: NextPage<IProps> = ({inspoRecipes, categories, searchOptions}) =
 
 
 CookBook.getInitialProps = async () => {
-    const inspoRecipes: IRecipeShort = await client.fetch(inspoRecipesQuery, {});
+    const recipes: IRecipe[] = await client.fetch(recipeQuery, {});
     const categories: ICategory[] = await client.fetch(categoryQuery, {});
     const groceries: IGrocery[] = await client.fetch(groceryQuery, {});
     return {
-        inspoRecipes: inspoRecipes,
+        inspoRecipes: recipes[0],
+        recipes: recipes,
         categories: categories,
-        searchOptions: [...categories, inspoRecipes, ...groceries]
+        searchOptions: [...categories, ...recipes, ...groceries]
     }
 }
 
@@ -196,14 +214,12 @@ const Menu = styled.div`
     }
 `;
 const StyledTabs = styled(Tabs)`
-
  && {
     width: 100%;
     flex-grow: 1;
     }
-    
- }
 `;
+
 const StyledTab = styled(Tab)`
   &&{
     font-size: 1.6rem;

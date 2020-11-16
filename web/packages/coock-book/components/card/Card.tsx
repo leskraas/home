@@ -1,27 +1,43 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {RestaurantRounded, ScheduleRounded, ShoppingCartRounded} from '@material-ui/icons';
-import {IRecipeShort} from "../../types/sanity";
+import {IRecipe} from "../../types/sanity";
 import {urlFor} from "../../utils/imageUrlBuilder";
 import styled from "styled-components";
 import {colors} from "../../shared/Colors";
+import {useRouter} from "next/router";
 
-export const Card: React.FC<IRecipeShort> = (props) => {
+interface IProps {
+    event: MouseEvent;
+    slug: string
+}
+
+export const Card: React.FC<IRecipe> = (props) => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
+    const router = useRouter();
 
+    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, slug: string) => {
+        event.preventDefault()
+        router.push({
+            pathname: '/oppskrift/[slug]',
+            query: {slug: slug},
+        })
+    }
+
+    props.slug.current
     return (
         <CardWrapper>
-            <CardHeading><h2>{props.name}</h2></CardHeading>
-                <CardImageWrapper show={!showInfo} onClick={()=> setShowInfo(!showInfo)}> <img
-                    src={urlFor(props.mainImage).fit("clip").width(125).height(100)
-                        .quality(100)
-                        .url()}/></CardImageWrapper>
-                <CardInfoWrapper show={showInfo} onClick={() => setShowInfo(!showInfo)}>
-                    <IconAndText><IconCircle><ScheduleRounded/></IconCircle><Text>{props.time.minutes}&nbsp;
-                        <small>min</small></Text></IconAndText>
-                    <IconAndText><IconCircle><RestaurantRounded/></IconCircle><small>{props.difficulty}</small></IconAndText>
-                    <IconAndText><IconCircle><ShoppingCartRounded/></IconCircle><Text>{props.ingredients.length}&nbsp;
-                        <small>ingredienser</small></Text></IconAndText>
-                </CardInfoWrapper>
+            <CardHeading onClick={(e) => handleClick(e, props.slug.current)}><h2>{props.name}</h2></CardHeading>
+            <CardImageWrapper show={!showInfo} onClick={() => setShowInfo(!showInfo)}> <img
+                src={urlFor(props.mainImage).fit("clip").width(125).height(100)
+                    .quality(100)
+                    .url()}/></CardImageWrapper>
+            <CardInfoWrapper show={showInfo} onClick={() => setShowInfo(!showInfo)}>
+                <IconAndText><IconCircle><ScheduleRounded/></IconCircle><Text>{props.time.minutes}&nbsp;
+                    <small>min</small></Text></IconAndText>
+                <IconAndText><IconCircle><RestaurantRounded/></IconCircle><small>{props.difficulty}</small></IconAndText>
+                <IconAndText><IconCircle><ShoppingCartRounded/></IconCircle><Text>{props.ingredients.length}&nbsp;
+                    <small>ingredienser</small></Text></IconAndText>
+            </CardInfoWrapper>
         </CardWrapper>
     );
 };
