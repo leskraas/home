@@ -1,9 +1,11 @@
 
+export type TDifficulty =  'Enkel'| 'Middels'| 'Middels';
+
 export interface IRecipe {
     _id: string;
     _type:'recipe';
     slug: ISlug;
-    difficulty: 'Enkel'| 'Middels'| 'Middels';
+    difficulty: TDifficulty;
     ingredients: IIngredient[];
     mainImage?: IImage;
     method: IMethodStep[];
@@ -11,6 +13,7 @@ export interface IRecipe {
     serves: number;
     tags: ICategory[];
     time: ITime;
+    description?: string;
 }
 
 

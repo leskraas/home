@@ -10,51 +10,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import {Box, Tab, Tabs, TextField} from "@material-ui/core";
 import {BuildRounded, FavoriteRounded, MenuBookRounded, SearchRounded} from "@material-ui/icons";
 import {Category} from "../components/Category";
-
-const categoryQuery = `*[_type == "category"] | order(name asc){
-    _id,
-    _type,
-    name,
-}`;
-
-const groceryQuery = `*[_type == "grocery"] | order(name asc){
-    _id,
-    _type,
-    image{
-        assets->{
-            _id,
-            url
-        }
-    },
-    isFromKitchen,
-    name,
-}`;
-
-const recipeQuery = `*[_type == "recipe"]{
-    _id,
-    _type,
-    slug,
-    difficulty,
-    ingredients[]{
-        _key,
-        _type,
-        name-> {
-            ...
-        }
-    },
-    mainImage{
-        asset->{
-            _id,
-            url,
-        }
-    },
-    method,
-    name,
-    serves,
-    tags,
-    time,
-}`;
-
+import {categoryQuery, groceryQuery, recipeQuery} from "../utils/SanityQuery";
 
 
 interface TabPanelProps {
@@ -85,7 +41,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 interface IProps {
-    inspoRecipes: IRecipe;
+    inspoRecipes: IRecipe[];
     recipes: IRecipe[];
     categories: ICategory[];
     searchOptions: {name: string}[];
@@ -101,15 +57,9 @@ const CookBook: NextPage<IProps> = ({inspoRecipes, categories, searchOptions, re
         <Layout title={'Kokebok'}>
             <Main>
                 <RecipeCarousel>
-                    {inspoRecipes && <>
-                        <Card {...inspoRecipes}/>
-                        <Card {...inspoRecipes}/>
-                        <Card {...inspoRecipes}/>
-                        <Card {...inspoRecipes}/>
-                        <Card {...inspoRecipes}/>
-                        <Card {...inspoRecipes}/>
-                        <Card {...inspoRecipes}/>
-                    </>}
+                    {inspoRecipes && inspoRecipes.map((recipe)=>
+                        <Card key={recipe._id} {...recipe}/>
+                    )}
                 </RecipeCarousel>
                 <Menu>
                     <StyledTabs indicatorColor="primary"
@@ -162,7 +112,7 @@ CookBook.getInitialProps = async () => {
     const categories: ICategory[] = await client.fetch(categoryQuery, {});
     const groceries: IGrocery[] = await client.fetch(groceryQuery, {});
     return {
-        inspoRecipes: recipes[0],
+        inspoRecipes: recipes,
         recipes: recipes,
         categories: categories,
         searchOptions: [...categories, ...recipes, ...groceries]

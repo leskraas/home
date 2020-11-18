@@ -5,6 +5,7 @@ import {urlFor} from "../../utils/imageUrlBuilder";
 import styled from "styled-components";
 import {colors} from "../../shared/Colors";
 import {useRouter} from "next/router";
+import {RecipeInfo} from "../RecipeInfo";
 
 interface IProps {
     event: MouseEvent;
@@ -32,11 +33,7 @@ export const Card: React.FC<IRecipe> = (props) => {
                     .quality(100)
                     .url()}/></CardImageWrapper>
             <CardInfoWrapper show={showInfo} onClick={() => setShowInfo(!showInfo)}>
-                <IconAndText><IconCircle><ScheduleRounded/></IconCircle><Text>{props.time.minutes}&nbsp;
-                    <small>min</small></Text></IconAndText>
-                <IconAndText><IconCircle><RestaurantRounded/></IconCircle><small>{props.difficulty}</small></IconAndText>
-                <IconAndText><IconCircle><ShoppingCartRounded/></IconCircle><Text>{props.ingredients.length}&nbsp;
-                    <small>ingredienser</small></Text></IconAndText>
+                <StyledRecipeInfo time={props.time} difficulty={props.difficulty} ingredients={props.ingredients}/>
             </CardInfoWrapper>
         </CardWrapper>
     );
@@ -64,6 +61,7 @@ const CardHeading = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 `;
 
 
@@ -89,7 +87,7 @@ const CardInfoWrapper = styled.div<{ show: boolean }>`
     position: absolute;
     bottom: 0;
     left: 0;
-    padding: .5rem 0 .8rem 1rem;
+    padding: 0;
     width: 100%;
     height: 100px;
     
@@ -104,33 +102,10 @@ const CardInfoWrapper = styled.div<{ show: boolean }>`
          }
     }
 `;
-const IconAndText = styled.div`
-    display: flex;
-    align-items: center;
-    color: ${colors.blue};
-    & + & {
-    margin-top: .5rem;
-    }
-`;
-const IconCircle = styled.div`
-    background-color: ${colors.blue};
-    width: 24px;
-    height: 24px;
-    color: ${colors.orange};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    margin-right: .5rem;
-    svg {
-    font-size: 18px;
-    }
-`;
 
-const Text = styled.p`
-font-size: 1.4rem;
-align-self: center;
-small {
-font-size: 1rem;
-}
+const StyledRecipeInfo = styled(RecipeInfo)`
+       & > * {
+      flex: 1;
+      justify-content: flex-start;
+    }
 `;

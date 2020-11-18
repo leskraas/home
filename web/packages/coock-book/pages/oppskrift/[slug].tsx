@@ -1,49 +1,82 @@
 import React from 'react';
 import {NextPage, NextPageContext} from "next";
 import client from "../../client";
+import {IRecipe} from "../../types/sanity";
+import styled from "styled-components";
+import {SanityImage} from "../../shared/SanityImage";
+import {Layout} from "../../components/Layout";
+import {RecipeInfo} from "../../components/RecipeInfo";
+import {recipeQuery} from "../../utils/SanityQuery";
+import {Button} from "../../shared/Button";
 
-const recipeQuery = `*[_type == "recipe" && slug.current == $slug]{
-    _id,
-    _type,
-    slug,
-    difficulty,
-    ingredients[]{
-        _key,
-        _type,
-        name-> {
-            ...
-        }
-    },
-    mainImage{
-        asset->{
-            _id,
-            url,
-        }
-    },
-    method,
-    name,
-    serves,
-    tags,
-    time,
-}[0]`;
 
-const Recipe: NextPage = (props: any) => {
-    console.log('test: ', props)
+interface IProps extends NextPageContext {
+    // getInitialProps: (context: NextPageContext) => Promise<{}>
+    recipe: IRecipe | undefined;
+}
+
+
+const Recipe: NextPage<IProps> = ({recipe}) => {
+    console.log('test: ', recipe)
     return (
-        <div>
-            hei
-        </div>
+        <Layout>
+            {recipe &&
+            <RecipeContainer>
+                <StyledSanityImage image={recipe.mainImage}/>
+                <StyledRecipeInfo time={recipe.time} difficulty={recipe.difficulty} ingredients={recipe.ingredients}/>
+                <Description>
+                    {recipe.description}
+                </Description>
+                <Button>Ingrediesner</Button>
+                <Button>Fremgangsmåte</Button>
+            </RecipeContainer>
+            }
+        </Layout>
     );
 };
 
-Recipe.getInitialProps = async function (context: NextPageContext) {
-    if (!context.req) {
-        return { recipe: undefined };
+const RecipeContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const StyledSanityImage = styled(SanityImage)`
+      border-radius: 0 0 20px 20px;
+`;
+
+const StyledRecipeInfo = styled(RecipeInfo)`
+    max-width: 300px;
+    width: 100%;
+    margin: 1rem auto;
+    & > * {
+      flex: 1;
+      justify-content: center;
     }
-    const { slug = "" } = context.query;
-    const recipe = await client.fetch(recipeQuery, { slug });
-    console.log('recipe', recipe);
-    return { recipe:  recipe};
+`;
+
+const Description = styled.p`
+      max-width: 400px;
+      width: calc(100% - 2*3rem);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 3rem;
+`;
+
+
+interface IRecipeContext extends NextPageContext {
+    slug: string;
+}
+
+
+Recipe.getInitialProps = async ({query, req}: IRecipeContext) => {
+    if (!req) {
+        return {recipe: undefined};
+    }
+    const {slug = ""} = query;
+    const recipe = await client.fetch(recipeQuery + "[0]", {slug});
+    // console.log('recipe', recipe);
+    return {recipe};
 };
 
 export default Recipe;
