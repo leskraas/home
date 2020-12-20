@@ -3,5 +3,5 @@ dist
 node_modules
 .next
 .DS_Store
-/out_publish/
-/out_functions/
+out_publish
+out_functions
