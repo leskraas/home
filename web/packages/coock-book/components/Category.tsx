@@ -1,24 +1,21 @@
+import { ButtonBase } from '@material-ui/core';
+import { NextPage } from 'next';
 import React from 'react';
-import {NextPage} from "next";
-import client from "../client";
-import {ICategory} from "../types/sanity";
-import {ButtonBase} from "@material-ui/core";
-import styled from "styled-components";
-import {colors} from "../shared/Colors";
-
-
+import styled from 'styled-components';
+import * as t from '../types/sanity';
+import { colors } from './atoms/Colors';
 
 interface IProps {
-    categories: ICategory[];
+    categories: t.Category[];
 }
 
-export const Category: NextPage<IProps> = ({categories}) => {
+export const Category: NextPage<IProps> = (props) => {
     return (
         <CategoryWrapper>
-            {categories && categories.map((category: ICategory) => (
-                <CategoryButton key={category._id}>
-                    {category.name}
-                </CategoryButton>))}
+            {props.categories &&
+                props.categories.map((category: t.Category) => (
+                    <CategoryButton key={category._id}>{category.name}</CategoryButton>
+                ))}
         </CategoryWrapper>
     );
 };
@@ -37,6 +34,8 @@ const CategoryButton = styled(ButtonBase)`
         margin: 1rem 2rem;
         text-align: left;
         border-radius: 20px;
-        background-color: ${colors.orange};
+        border: 2px solid ${colors.blue};
+        color: ${colors.blue};
+        //background-color: ${colors.orange};
     }
 `;

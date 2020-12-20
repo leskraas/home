@@ -1,93 +1,91 @@
+export type Difficulty = 'Enkel' | 'Middels' | 'Middels';
 
-export type TDifficulty =  'Enkel'| 'Middels'| 'Middels';
-
-export interface IRecipe {
+export type Recipe = {
+    _type: 'recipe';
     _id: string;
-    _type:'recipe';
-    slug: ISlug;
-    difficulty: TDifficulty;
-    ingredients: IIngredient[];
-    mainImage?: IImage;
-    method: IMethodStep[];
+    slug: Slug;
+    difficulty: Difficulty;
+    ingredients: Ingredient[];
+    mainImage?: Image;
+    method: MethodStep[];
     name: string;
     serves: number;
-    tags: ICategory[];
-    time: ITime;
+    tags: Category[];
+    time: Time;
     description?: string;
-}
+};
 
-
-export interface IMethodStep {
-    _key:string;
-    _type:'methodStep';
+export type MethodStep = {
+    _type: 'methodStep';
+    _key: string;
     stepIngredients?: string[];
-    stepText:string;
-}
+    stepText: string;
+};
 
-export interface IIngredient {
+export type Ingredient = {
     _type: 'ingredient';
     _key: string;
-    name: IGrocery;
-    quantity: IQuantity;
+    name: Grocery;
+    quantity: Quantity;
     extendedText?: string;
-}
+};
 
-export interface IQuantity {
+export type Quantity = {
     amount: number;
     unit: 'ss' | 'ts' | 'dl' | 'ml' | 'l' | 'g' | 'stykk' | 'boks';
-}
+};
 
-export interface ITime {
+export type Time = {
     hour: number;
     minutes: number;
-}
+};
 
-export interface ISlug {
+export type Slug = {
     _type: 'slug';
     current: string;
-}
+};
 
-export interface IImage {
+export type Image = {
     _type: 'image';
     _id?: string;
     _key: string;
-    asset: IAsset;
-    crop?: ICrop;
-    hotspot?: IHotspot;
-}
+    asset: Asset;
+    crop?: Crop;
+    hotspot?: Hotspot;
+};
 
-interface IAsset {
+type Asset = {
     _ref: string;
     _type: 'reference';
     _id?: string;
-}
+};
 
-interface ICrop {
+type Crop = {
     _type: 'sanity.imageCrop';
     bottom: number;
     left: number;
     right: number;
     top: number;
-}
+};
 
-interface IHotspot {
+type Hotspot = {
     _type: 'sanity.imageHotspot';
     height: number;
     width: number;
     x: number;
     y: number;
-}
+};
 
-export interface ICategory {
+export type Category = {
     _id: string;
     _type: 'category';
     name: string;
-}
+};
 
-export interface IGrocery {
-    _id: string
-    _type: "grocery"
-    image: IImage
-    isFromKitchen: boolean
-    name: string
-}
+export type Grocery = {
+    _id: string;
+    _type: 'grocery';
+    image: Image;
+    isFromKitchen: boolean;
+    name: string;
+};

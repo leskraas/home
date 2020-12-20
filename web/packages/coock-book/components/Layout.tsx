@@ -1,31 +1,40 @@
-import React from "react";
-import NextHead from 'next/head'
-import {createGlobalStyle} from 'styled-components';
-import {createMuiTheme, ThemeProvider} from "@material-ui/core";
-import {colors} from "../shared/Colors";
+import NextHead from 'next/head';
+import React from 'react';
+import { createGlobalStyle, DefaultTheme, ThemeProvider } from 'styled-components';
 
-const defaultTheme = createMuiTheme({
-    palette: {
-        primary: {
-            main: colors.blue,
-        },
-        secondary: {
-            main: colors.orange,
-        },
+const theme: DefaultTheme = {
+    colors: {
+        primary: '#433232',
+        secondary: '#FF9A00',
+        textOnPrimary: '#FAFAFA',
+        text: '#433232',
+        textSecondary: '#736767',
+        backgroundPrimary: '#FAFAFA',
+        backgroundSecondary: '#FFFFFF',
     },
-    typography: {
-        htmlFontSize: 10,
-        fontSize: 14,
-        fontFamily: ['Poppins', 'sans-serif'].join(',')
+    shadows: {
+        primary: '0px 2px 15px rgba(0, 0, 0, 0.1)',
     },
-})
-const theme = {
-    ...defaultTheme,
-}
+    borderRadius: {
+        lg: '20px',
+        md: '10px',
+        sm: '5px',
+    },
+    fonts: ['Poppins', 'sans-serif'],
+    fontSize: {
+        xxl: '3rem',
+        xl: '2.4rem',
+        lg: '2rem',
+        md: '1.6rem',
+        sm: '1.2rem',
+        xs: '1rem',
+    },
+};
 
 const GlobalStyle = createGlobalStyle`
   html {
-        font-size: 62.5%;    
+        font-size: 62.5%;
+        color: ${theme.colors.text};
   }
   * {
         font-family: 'Poppins', sans-serif;
@@ -36,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
         word-wrap: break-word;
   }  
   html , body {
-      height: 100%; overflow: hidden
+      height: 100%;
   }
 `;
 
@@ -45,24 +54,22 @@ interface IProps {
     description?: string;
 }
 
-export const Layout: React.FC<IProps> = ({children, title, description}) => (
+export const Layout: React.FC<IProps> = ({ children, title, description }) => (
     <>
         <NextHead>
             <title>{title || ''}</title>
-            <meta name="description" content={description || ''}/>
-            <meta name="theme-color" content={'#fff'}/>
+            <meta name="description" content={description || ''} />
+            <meta name="theme-color" content={'#fff'} />
             {/*<link rel="icon" sizes="192x192" href="/static/images/icons-192.png" />*/}
             {/*<link rel="apple-touch-icon" href="/static/images/icons-192.png" />*/}
             {/*<link rel="icon" href="/static/favicon.ico" />*/}
             <link
                 href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,300;1,400&display=swap"
-                rel="stylesheet"/>
-            <link rel="manifest" href="/manifest.json"/>
+                rel="stylesheet"
+            />
+            <link rel="manifest" href="/manifest.json" />
         </NextHead>
-        <GlobalStyle/>
-        <ThemeProvider theme={theme}>
-        {children}
-        </ThemeProvider>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </>
-)
-
+);

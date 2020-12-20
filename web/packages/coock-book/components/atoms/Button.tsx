@@ -1,22 +1,16 @@
+import { ButtonBase } from '@material-ui/core';
 import React from 'react';
-import styled from "styled-components";
-import {ButtonBase} from "@material-ui/core";
-import {colors} from "./Colors";
-
+import styled from 'styled-components';
+import { colors } from './Colors';
 
 interface IButton {
     className?: string;
     children?: any;
 }
 
-export const Button: React.FC<IButton> = ({className, children}) => {
-    return (
-        <StyledButton className={className}>
-            {children}
-        </StyledButton>
-    );
+export const Button: React.FC<IButton> = ({ className, children }) => {
+    return <StyledButton className={className}>{children}</StyledButton>;
 };
-
 
 const StyledButton = styled(ButtonBase)`
     && {

@@ -1,10 +1,12 @@
-export const categoryQuery = `*[_type == "category"] | order(name asc){
+import groq from 'groq';
+
+export const categoryQuery = groq`*[_type == "category"] | order(name asc){
     _id,
     _type,
     name,
 }`;
 
-export const groceryQuery = `*[_type == "grocery"] | order(name asc){
+export const groceryQuery = groq`*[_type == "grocery"] | order(name asc){
     _id,
     _type,
     image{
@@ -17,7 +19,7 @@ export const groceryQuery = `*[_type == "grocery"] | order(name asc){
     name,
 }`;
 
-export const recipeQuery = `*[_type == "recipe"]{
+export const recipeQuery = groq`*[_type == "recipe"]{
     _id,
     _type,
     slug,
@@ -42,3 +44,31 @@ export const recipeQuery = `*[_type == "recipe"]{
     tags,
     time,
 }`;
+
+export const recipeQuerySlug = groq`*[_type == "recipe" && slug.current == $slug]{
+    _id,
+    _type,
+    slug,
+    difficulty,
+    description,
+    ingredients[]{
+        _key,
+        _type,
+        name-> {
+            ...,
+        },
+        quantity,
+        extendedText
+    },
+    mainImage{
+        asset->{
+            _id,
+            url,
+        }
+    },
+    method,
+    name,
+    serves,
+    tags,
+    time,
+}[0]`;
