@@ -24,19 +24,19 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const allRecipes = await getAllRecipeWithSlug();
+    const paths =
+        allRecipes.map((recipe) => ({
+            params: { slug: recipe.slug },
+        })) || [];
     return {
-        paths:
-            allRecipes?.map((recipe) => ({
-                params: {
-                    slug: recipe.slug,
-                },
-            })) || [],
+        paths,
         fallback: true,
     };
 };
 
 const Recipe: NextPage<Props> = (props) => {
     const router = useRouter();
+    console.log('router', router);
     if (!router.isFallback && !props.recipe?.slug) {
         return <ErrorPage statusCode={404} />;
     }
