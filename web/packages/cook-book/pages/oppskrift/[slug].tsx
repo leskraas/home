@@ -14,12 +14,12 @@ import { getAllRecipeWithSlug, getRecipeBySlug } from '../../lib/api';
 import * as t from '../../types/sanity';
 
 type Props = {
-    recipe: t.Recipe;
+    recipe: t.Recipe | null;
 };
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     const data = await getRecipeBySlug(params?.slug);
-    return { props: { recipe: data } };
+    return { props: { recipe: data || null } };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -40,27 +40,29 @@ const Recipe: NextPage<Props> = (props) => {
     if (!router.isFallback && !props.recipe?.slug) {
         return <ErrorPage statusCode={404} />;
     }
-    const { mainImage, name, time, difficulty, ingredients, method } = props.recipe;
+    const { recipe } = props;
     return (
         <>
             {router.isFallback ? (
                 <H1 size={'xl'}>Laster ...</H1>
             ) : (
-                <RecipeContainer>
-                    {mainImage && <StyledSanityImage image={mainImage} />}
-                    <HeadingBox>
-                        <H1 size={'xl'}>{name}</H1>
-                        <StyledRecipeInfo
-                            time={time}
-                            difficulty={difficulty}
-                            ingredients={ingredients}
-                        />
-                    </HeadingBox>
-                    <ContentWrapper>
-                        <IngredientsList ingredients={ingredients} />
-                        <Method methodSteps={method} />
-                    </ContentWrapper>
-                </RecipeContainer>
+                recipe && (
+                    <RecipeContainer>
+                        {recipe.mainImage && <StyledSanityImage image={recipe.mainImage} />}
+                        <HeadingBox>
+                            <H1 size={'xl'}>{recipe.name}</H1>
+                            <StyledRecipeInfo
+                                time={recipe.time}
+                                difficulty={recipe.difficulty}
+                                ingredients={recipe.ingredients}
+                            />
+                        </HeadingBox>
+                        <ContentWrapper>
+                            <IngredientsList ingredients={recipe.ingredients} />
+                            <Method methodSteps={recipe.method} />
+                        </ContentWrapper>
+                    </RecipeContainer>
+                )
             )}
         </>
     );
