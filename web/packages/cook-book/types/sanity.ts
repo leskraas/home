@@ -1,19 +1,29 @@
 export type Difficulty = 'Enkel' | 'Middels' | 'Middels';
 
-export type Recipe = {
-    _type: 'recipe';
-    _id: string;
-    slug: Slug;
+export interface Recipe extends RecipeMain {
     difficulty: Difficulty;
     ingredients: Ingredient[];
     mainImage?: Image;
     method: MethodStep[];
-    name: string;
     serves: number;
     tags: Category[];
     time: Time;
     description?: string;
+}
+export type RecipeMain = {
+    _type: 'recipe';
+    _id: string;
+    slug: Slug;
+    name: string;
 };
+
+export interface RecipeShort extends RecipeMain {
+    difficulty: Difficulty;
+    ingredients: { _key: string; name: string }[];
+    mainImage?: Image;
+    serves: number;
+    time: Time;
+}
 
 export type MethodStep = {
     _type: 'methodStep';

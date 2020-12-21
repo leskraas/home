@@ -1,17 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Recipe } from '../../types/sanity';
+import { RecipeShort } from '../../types/sanity';
 import { urlFor } from '../../utils/imageUrlBuilder';
 import { colors } from '../atoms/Colors';
+import { H2 } from '../atoms/Typography';
 import { RecipeInfo } from '../RecipeInfo';
 
-interface IProps {
-    event: MouseEvent;
-    slug: string;
-}
-
-export const RecipeCard: React.FC<Recipe> = (props) => {
+export const RecipeCard: React.FC<RecipeShort> = (props) => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
     const router = useRouter();
 
@@ -27,7 +23,7 @@ export const RecipeCard: React.FC<Recipe> = (props) => {
     return (
         <CardWrapper>
             <CardHeading onClick={(e) => handleClick(e, props.slug.current)}>
-                <h2>{props.name}</h2>
+                <H2 size={'md'}>{props.name}</H2>
             </CardHeading>
             <CardImageWrapper show={!showInfo} onClick={() => setShowInfo(!showInfo)}>
                 {props.mainImage && (
@@ -65,9 +61,7 @@ const CardWrapper = styled.div`
     margin: 0 1rem;
 `;
 const CardHeading = styled.div`
-    font-size: 1.6rem;
     font-weight: 400;
-    color: ${colors.blue};
     text-align: center;
     height: 100px;
     width: 100%;

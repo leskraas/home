@@ -20,7 +20,7 @@ const theme: DefaultTheme = {
         md: '10px',
         sm: '5px',
     },
-    fonts: ['Poppins', 'sans-serif'],
+    fonts: ['montserrat', 'montserrat-alternates', 'Verdana', 'sans-serif'],
     fontSize: {
         xxl: '3rem',
         xl: '2.4rem',
@@ -35,9 +35,10 @@ const GlobalStyle = createGlobalStyle`
   html {
         font-size: 62.5%;
         color: ${theme.colors.text};
+        background-color: ${theme.colors.backgroundPrimary};
   }
   * {
-        font-family: 'Poppins', sans-serif;
+        font-family: montserrat, Verdana, sans-serif;
         font-size: 100%;
         box-sizing: border-box;
         margin: 0;
@@ -63,11 +64,8 @@ export const Layout: React.FC<IProps> = ({ children, title, description }) => (
             {/*<link rel="icon" sizes="192x192" href="/static/images/icons-192.png" />*/}
             {/*<link rel="apple-touch-icon" href="/static/images/icons-192.png" />*/}
             {/*<link rel="icon" href="/static/favicon.ico" />*/}
-            <link
-                href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,300;1,400&display=swap"
-                rel="stylesheet"
-            />
             <link rel="manifest" href="/manifest.json" />
+            <link rel="stylesheet" href="https://use.typekit.net/pnf4qsl.css" />
         </NextHead>
         <GlobalStyle />
         <ThemeProvider theme={theme}>{children}</ThemeProvider>

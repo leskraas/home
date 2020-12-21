@@ -2,26 +2,17 @@ import groq from 'groq';
 
 export const categoryQuery = groq`*[_type == "category"] | order(name asc){
     _id,
-    _type,
     name,
 }`;
 
 export const groceryQuery = groq`*[_type == "grocery"] | order(name asc){
     _id,
-    _type,
-    image{
-        assets->{
-            _id,
-            url
-        }
-    },
     isFromKitchen,
     name,
 }`;
 
 export const recipeQuery = groq`*[_type == "recipe"]{
     _id,
-    _type,
     slug,
     difficulty,
     description,
@@ -44,10 +35,33 @@ export const recipeQuery = groq`*[_type == "recipe"]{
     tags,
     time,
 }`;
+export const recipeInspoQuery = groq`*[_type == "recipe"]{
+    _id,
+    slug,
+    difficulty,
+    ingredients[]{
+        _key,
+        name
+    },
+    mainImage{
+        asset->{
+            _id,
+            url,
+        }
+    },
+    name,
+    serves,
+    time,
+}[0...10]`;
+
+export const recipeShortQuery = groq`*[_type == "recipe"]{
+    _id,
+    slug,
+    name,
+}`;
 
 export const recipeQuerySlug = groq`*[_type == "recipe" && slug.current == $slug]{
     _id,
-    _type,
     slug,
     difficulty,
     description,

@@ -1,7 +1,8 @@
-import { GetServerSideProps, NextPage, NextPageContext } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import ErrorPage from 'next/error';
+import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
-import client from '../../client';
 import { Container } from '../../components/atoms/Container';
 import { SanityImage } from '../../components/atoms/SanityImage';
 import { ShadowBox } from '../../components/atoms/ShadowBox';
@@ -9,18 +10,42 @@ import { H1 } from '../../components/atoms/Typography';
 import { IngredientsList } from '../../components/ingredients/IngredientsList';
 import { Method } from '../../components/Method';
 import { RecipeInfo } from '../../components/RecipeInfo';
+import { getAllRecipeWithSlug, getRecipeBySlug } from '../../lib/api';
 import * as t from '../../types/sanity';
-import { recipeQuerySlug } from '../../utils/SanityQuery';
 
-interface IProps extends NextPageContext {
+type Props = {
     recipe: t.Recipe;
-}
+};
 
-const Recipe: NextPage<IProps> = (props) => {
+export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
+    const data = await getRecipeBySlug(params?.slug);
+    return { props: { recipe: data } };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const allRecipes = await getAllRecipeWithSlug();
+    return {
+        paths:
+            allRecipes?.map((recipe) => ({
+                params: {
+                    slug: recipe.slug,
+                },
+            })) || [],
+        fallback: true,
+    };
+};
+
+const Recipe: NextPage<Props> = (props) => {
+    const router = useRouter();
+    if (!router.isFallback && !props.recipe?.slug) {
+        return <ErrorPage statusCode={404} />;
+    }
     const { mainImage, name, time, difficulty, ingredients, method } = props.recipe;
     return (
         <>
-            {props.recipe && (
+            {router.isFallback ? (
+                <H1 size={'xl'}>Laster ...</H1>
+            ) : (
                 <RecipeContainer>
                     {mainImage && <StyledSanityImage image={mainImage} />}
                     <HeadingBox>
@@ -77,14 +102,5 @@ const StyledRecipeInfo = styled(RecipeInfo)`
         justify-content: center;
     }
 `;
-
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
-    if (!req) {
-        return { props: { recipe: undefined } };
-    }
-    const { slug = '' } = query;
-    const recipe: t.Recipe = await client.fetch(recipeQuerySlug, { slug });
-    return { props: { recipe } };
-};
 
 export default Recipe;

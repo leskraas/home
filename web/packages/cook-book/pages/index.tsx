@@ -1,41 +1,34 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import React from 'react';
-import styled from 'styled-components';
-import client from '../client';
-import { colors } from '../components/atoms/Colors';
-import { RecipeCard } from '../components/card/RecipeCard';
+import { RecipeCarousel } from '../components/RecipeCarousel';
+import { getAllRecipeWithMain, getAllRecipeWithShort } from '../lib/api';
+import client from '../lib/sanity';
 import * as t from '../types/sanity';
-import { categoryQuery, groceryQuery, recipeQuery } from '../utils/SanityQuery';
+import { categoryQuery, groceryQuery } from '../utils/SanityQuery';
 
 interface IProps {
-    inspoRecipes: t.Recipe[];
-    recipes: t.Recipe[];
+    inspoRecipes: t.RecipeShort[];
+    recipes: t.RecipeMain[];
     categories: t.Category[];
     searchOptions: { name: string }[];
 }
 
 const CookBook: NextPage<IProps> = (props) => {
     return (
-        <>
-            <Main>
-                <RecipeCarousel>
-                    {props.inspoRecipes &&
-                        props.inspoRecipes.map((recipe) => (
-                            <RecipeCard key={recipe._id} {...recipe} />
-                        ))}
-                </RecipeCarousel>
-            </Main>
-        </>
+        <div>
+            <RecipeCarousel inspoRecipes={props.inspoRecipes} />
+        </div>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const recipes: t.Recipe[] = await client.fetch(recipeQuery, {});
+export const getStaticProps: GetStaticProps = async () => {
+    const recipes: t.RecipeMain[] = await getAllRecipeWithMain();
+    const inspoRecipes: t.RecipeShort[] = await getAllRecipeWithShort();
     const categories: t.Category[] = await client.fetch(categoryQuery, {});
     const groceries: t.Grocery[] = await client.fetch(groceryQuery, {});
     return {
         props: {
-            inspoRecipes: recipes,
+            inspoRecipes: inspoRecipes,
             recipes: recipes,
             categories: categories,
             searchOptions: [...categories, ...recipes, ...groceries],
@@ -44,23 +37,3 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default CookBook;
-
-const Main = styled.div`
-    width: 100vw;
-    min-height: 100vh;
-    height: 100%;
-    background-image: linear-gradient(200deg, ${colors.blue}, ${colors.blueFade});
-    padding: 4rem 0;
-`;
-
-const RecipeCarousel = styled.div`
-    overflow-x: scroll;
-    display: flex;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    ::-webkit-scrollbar {
-        display: none;
-    }
-`;
