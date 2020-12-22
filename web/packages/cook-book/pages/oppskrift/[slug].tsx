@@ -36,7 +36,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const Recipe: NextPage<Props> = (props) => {
     const router = useRouter();
-    console.log('router', router);
     if (!router.isFallback && !props.recipe?.slug) {
         return <ErrorPage statusCode={404} />;
     }

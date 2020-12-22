@@ -13,10 +13,13 @@ export const RecipeCard: React.FC<RecipeShort> = (props) => {
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, slug: string) => {
         event.preventDefault();
-        router.push({
-            pathname: '/oppskrift/[slug]',
-            query: { slug: slug },
-        });
+        router.push(
+            {
+                pathname: '/oppskrift/[slug]',
+                query: { slug: slug },
+            },
+            `/oppskrift/${slug}`
+        );
     };
 
     props.slug.current;
