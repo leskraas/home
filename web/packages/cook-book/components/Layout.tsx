@@ -20,7 +20,7 @@ const theme: DefaultTheme = {
         md: '10px',
         sm: '5px',
     },
-    fonts: ['montserrat', 'montserrat-alternates', 'Verdana', 'sans-serif'],
+    fonts: ['Roboto', 'Helvetica', 'Verdana', 'sans-serif'],
     fontSize: {
         xxl: '3rem',
         xl: '2.4rem',
@@ -34,11 +34,16 @@ const theme: DefaultTheme = {
 const GlobalStyle = createGlobalStyle`
   html {
         font-size: 62.5%;
+        font-weight: 400;
+        line-height: 1.43;
+        letter-spacing: 0.01071em;
         color: ${theme.colors.text};
         background-color: ${theme.colors.backgroundPrimary};
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
   }
   * {
-        font-family: montserrat, Verdana, sans-serif;
+        font-family: Roboto, Helvetica, Verdana, sans-serif;
         font-size: 100%;
         box-sizing: border-box;
         margin: 0;
@@ -65,7 +70,11 @@ export const Layout: React.FC<IProps> = ({ children, title, description }) => (
             {/*<link rel="apple-touch-icon" href="/static/images/icons-192.png" />*/}
             {/*<link rel="icon" href="/static/favicon.ico" />*/}
             <link rel="manifest" href="/manifest.json" />
-            <link rel="stylesheet" href="https://use.typekit.net/pnf4qsl.css" />
+            {/*<link rel="stylesheet" href="https://use.typekit.net/pnf4qsl.css" />*/}
+            <link
+                href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap"
+                rel="stylesheet"
+            />
         </NextHead>
         <GlobalStyle />
         <ThemeProvider theme={theme}>{children}</ThemeProvider>

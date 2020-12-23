@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { RecipeShort } from '../types/sanity';
 import { RecipeCard } from './card/RecipeCard';
+import { Carousel } from './Carousel';
 
 type Props = {
     inspoRecipes: RecipeShort[];
@@ -16,15 +16,3 @@ export const RecipeCarousel: React.FC<Props> = (props) => {
         </Carousel>
     );
 };
-
-const Carousel = styled.div`
-    overflow-x: scroll;
-    display: flex;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    ::-webkit-scrollbar {
-        display: none;
-    }
-`;

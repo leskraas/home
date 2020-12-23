@@ -1,5 +1,6 @@
 import { GetStaticProps, NextPage } from 'next';
 import React from 'react';
+import { CategoryCarousel } from '../components/CategoryCarousel';
 import { RecipeCarousel } from '../components/RecipeCarousel';
 import { getAllRecipeWithMain, getAllRecipeWithShort } from '../lib/api';
 import client from '../lib/sanity';
@@ -16,6 +17,7 @@ interface IProps {
 const CookBook: NextPage<IProps> = (props) => {
     return (
         <div>
+            <CategoryCarousel categories={props.categories} />
             <RecipeCarousel inspoRecipes={props.inspoRecipes} />
         </div>
     );
