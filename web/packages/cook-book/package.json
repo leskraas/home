@@ -38,6 +38,7 @@
     "eslint": "^7.15.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "framer-motion": "^3.1.1",
     "groq": "^2.0.9",
     "next-pwa": "^5.0.1",
     "styled-components": "^5.2.1",

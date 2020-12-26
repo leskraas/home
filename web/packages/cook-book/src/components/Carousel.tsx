@@ -11,8 +11,6 @@ const CarouselContainer = styled.div`
     will-change: scroll-position;
     cursor: grab;
     display: flex;
-    padding-left: 2rem;
-    padding-right: 2rem;
     -ms-overflow-style: none;
     scrollbar-width: none;
     ::-webkit-scrollbar {

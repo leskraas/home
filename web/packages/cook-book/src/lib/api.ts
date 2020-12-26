@@ -10,7 +10,7 @@ const recipeMainFields = `
 const recipeCommenFields = `
     ${recipeMainFields}
     difficulty,
-     mainImage{
+    mainImage {
         asset->{
             _id,
             url,
@@ -63,7 +63,7 @@ export const getAllRecipeWithMain: () => Promise<RecipeMain[]> = async () => {
     );
 };
 
-export const getAllRecipeWithShort: () => Promise<RecipeShort[]> = async () => {
+export const getAllRecipeShort: () => Promise<RecipeShort[]> = async () => {
     return await client.fetch(
         groq`*[_type == "recipe"] | order(date desc){
       ${recipeShortFields}
