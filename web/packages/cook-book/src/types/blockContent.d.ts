@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ElementType } from 'react';
 
 interface SerializersType {
     [key: string]: React.ReactNode;
@@ -6,7 +7,7 @@ interface SerializersType {
 
 export interface Serializers {
     types: SerializersType;
-    marks?: object;
+    marks?: Record<string, string | ElementType>;
     list?: (props: any) => React.ReactNode;
     listItem?: (props: any) => React.ReactNode;
     hardBreak?: boolean;
@@ -23,10 +24,9 @@ export interface Props {
     className?: string;
     renderContainerOnSingleChild?: boolean;
     serializers?: Serializers;
-
     projectId?: string;
     dataset?: string;
-    imageOptions?: object;
+    imageOptions?: Record<string, string | ElementType>;
 }
 
 declare const BlockContent: React.FC<Props>;

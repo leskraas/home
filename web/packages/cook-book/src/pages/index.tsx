@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { GetStaticProps, NextPage } from 'next';
 import React from 'react';
 import { RecipeCard } from '../components/RecipeCard';
@@ -16,14 +17,14 @@ interface IProps {
 
 const CookBook: NextPage<IProps> = (props) => {
     return (
-        <div>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/*<CategoryCarousel categories={props.categories} />*/}
             <RecipeCarousel recipe={props.inspoRecipes.filter((recipe) => recipe.mainImage)} />
             {/*{props.inspoRecipes[1] && <RecipeCard recipe={props.inspoRecipes[1]} />}*/}
             {props.inspoRecipes.map((recipe) => (
                 <RecipeCard recipe={recipe} key={recipe._id} />
             ))}
-        </div>
+        </motion.div>
     );
 };
 
