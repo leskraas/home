@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { CardLayout } from '../../types/SharedTypes';
@@ -6,13 +5,13 @@ import { CardLayout } from '../../types/SharedTypes';
 export const Card: React.FC<CardLayout> = (props) => {
     const { children, layout } = props;
     return (
-        <FullWidth whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <FullWidth>
             <CardContainer layout={layout}>{children}</CardContainer>
         </FullWidth>
     );
 };
 
-const FullWidth = styled(motion.div)`
+const FullWidth = styled.div`
     display: flex;
     padding: 1rem;
 `;

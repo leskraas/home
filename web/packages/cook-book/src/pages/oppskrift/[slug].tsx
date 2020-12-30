@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
@@ -42,24 +41,13 @@ const Recipe: NextPage<Props> = (props) => {
     }
     const { recipe } = props;
     return (
-        <RecipeContainer
-            key={router.route}
-            // initial="initial"
-            // animate="animate"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-        >
+        <RecipeContainer>
             {router.isFallback ? (
                 <H1 size={'xl'}>Laster ...</H1>
             ) : (
                 recipe && (
                     <>
-                        {/*<MotionDiv variants={fadeIn}>*/}
                         {recipe.mainImage && <StyledSanityImage image={recipe.mainImage} />}
-                        {/*</MotionDiv>*/}
-                        {/*<MotionDiv variants={stagger}>*/}
-                        {/*    <MotionDiv variants={fadeInDown}>*/}
                         <HeadingBox>
                             <H1 size={'xl'}>{recipe.name}</H1>
                             <StyledRecipeInfo
@@ -68,16 +56,10 @@ const Recipe: NextPage<Props> = (props) => {
                                 ingredients={recipe.ingredients}
                             />
                         </HeadingBox>
-                        {/*</MotionDiv>*/}
                         <ContentWrapper>
-                            {/*<MotionDiv variants={fadeInUp}>*/}
                             <IngredientsList ingredients={recipe.ingredients} />
-                            {/*</MotionDiv>*/}
-                            {/*<MotionDiv variants={fadeInUp}>*/}
                             <Method methodSteps={recipe.method} />
-                            {/*</MotionDiv>*/}
                         </ContentWrapper>
-                        {/*</MotionDiv>*/}
                     </>
                 )
             )}
@@ -85,7 +67,7 @@ const Recipe: NextPage<Props> = (props) => {
     );
 };
 
-const RecipeContainer = styled(motion.div)`
+const RecipeContainer = styled.div`
     display: flex;
     flex-direction: column;
 `;
