@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from '../../components/atoms/Container';
-import { MotionDiv } from '../../components/atoms/MotionDiv';
 import { SanityImage } from '../../components/atoms/SanityImage';
 import { ShadowBox } from '../../components/atoms/ShadowBox';
 import { H1 } from '../../components/atoms/Typography';
@@ -14,7 +13,6 @@ import { Method } from '../../components/Method';
 import { RecipeInfo } from '../../components/RecipeInfo';
 import { getAllRecipeWithSlug, getRecipeBySlug } from '../../lib/api';
 import * as t from '../../types/sanity';
-import { fadeIn, fadeInDown, fadeInUp, stagger } from '../../utils/Animations';
 
 type Props = {
     recipe: t.Recipe | null;
@@ -44,44 +42,46 @@ const Recipe: NextPage<Props> = (props) => {
     }
     const { recipe } = props;
     return (
-        <>
+        <RecipeContainer
+            key={router.route}
+            // initial="initial"
+            // animate="animate"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
             {router.isFallback ? (
                 <H1 size={'xl'}>Laster ...</H1>
             ) : (
                 recipe && (
-                    <RecipeContainer
-                        key={router.route}
-                        initial="initial"
-                        animate="animate"
-                        exit={{ opacity: 0 }}
-                    >
-                        <MotionDiv variants={fadeIn}>
-                            {recipe.mainImage && <StyledSanityImage image={recipe.mainImage} />}
-                        </MotionDiv>
-                        <MotionDiv variants={stagger}>
-                            <MotionDiv variants={fadeInDown}>
-                                <HeadingBox>
-                                    <H1 size={'xl'}>{recipe.name}</H1>
-                                    <StyledRecipeInfo
-                                        time={recipe.time}
-                                        difficulty={recipe.difficulty}
-                                        ingredients={recipe.ingredients}
-                                    />
-                                </HeadingBox>
-                            </MotionDiv>
-                            <ContentWrapper>
-                                <MotionDiv variants={fadeInUp}>
-                                    <IngredientsList ingredients={recipe.ingredients} />
-                                </MotionDiv>
-                                <MotionDiv variants={fadeInUp}>
-                                    <Method methodSteps={recipe.method} />
-                                </MotionDiv>
-                            </ContentWrapper>
-                        </MotionDiv>
-                    </RecipeContainer>
+                    <>
+                        {/*<MotionDiv variants={fadeIn}>*/}
+                        {recipe.mainImage && <StyledSanityImage image={recipe.mainImage} />}
+                        {/*</MotionDiv>*/}
+                        {/*<MotionDiv variants={stagger}>*/}
+                        {/*    <MotionDiv variants={fadeInDown}>*/}
+                        <HeadingBox>
+                            <H1 size={'xl'}>{recipe.name}</H1>
+                            <StyledRecipeInfo
+                                time={recipe.time}
+                                difficulty={recipe.difficulty}
+                                ingredients={recipe.ingredients}
+                            />
+                        </HeadingBox>
+                        {/*</MotionDiv>*/}
+                        <ContentWrapper>
+                            {/*<MotionDiv variants={fadeInUp}>*/}
+                            <IngredientsList ingredients={recipe.ingredients} />
+                            {/*</MotionDiv>*/}
+                            {/*<MotionDiv variants={fadeInUp}>*/}
+                            <Method methodSteps={recipe.method} />
+                            {/*</MotionDiv>*/}
+                        </ContentWrapper>
+                        {/*</MotionDiv>*/}
+                    </>
                 )
             )}
-        </>
+        </RecipeContainer>
     );
 };
 
