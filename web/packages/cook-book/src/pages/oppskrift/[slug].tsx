@@ -49,7 +49,12 @@ const Recipe: NextPage<Props> = (props) => {
                 <H1 size={'xl'}>Laster ...</H1>
             ) : (
                 recipe && (
-                    <RecipeContainer initial="initial" animate="animate" exit={{ opacity: 0 }}>
+                    <RecipeContainer
+                        key={router.route}
+                        initial="initial"
+                        animate="animate"
+                        exit={{ opacity: 0 }}
+                    >
                         <MotionDiv variants={fadeIn}>
                             {recipe.mainImage && <StyledSanityImage image={recipe.mainImage} />}
                         </MotionDiv>

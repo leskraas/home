@@ -6,7 +6,7 @@ import { Layout } from '../components/Layout';
 export default function App({ Component, pageProps, router }: AppProps) {
     return (
         <Layout title={'Kokeboken'}>
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence initial={false} exitBeforeEnter>
                 <Component {...pageProps} key={router.route} />
             </AnimatePresence>
         </Layout>
