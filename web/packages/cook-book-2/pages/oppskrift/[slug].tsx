@@ -27,10 +27,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const Recipe: NextPage<Props> = (props) => {
     const { recipe } = props;
-    const { name } = recipe as t.Recipe;
     return (
         <Layout>
-            <h1 style={{ fontSize: '3rem' }}>{name}</h1>
+            <h1 style={{ fontSize: '3rem' }}>{recipe?.name}</h1>
         </Layout>
     );
 };

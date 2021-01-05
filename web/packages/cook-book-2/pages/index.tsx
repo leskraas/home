@@ -1,7 +1,6 @@
 import { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
 import { Layout } from '../components/Layout';
 import { getAllRecipeShort } from '../lib/sanity-queries';
 import * as t from '../types/sanity';
