@@ -18,6 +18,7 @@ const theme: DefaultTheme = {
     },
     shadows: {
         primary: '0px 2px 15px rgba(0, 0, 0, 0.1)',
+        secondary: '0px 2px 15px rgba(0, 0, 0, 0.3)',
     },
     borderRadius: {
         lg: '20px',
@@ -30,7 +31,7 @@ const theme: DefaultTheme = {
         xl: '2.4rem',
         lg: '2rem',
         md: '1.6rem',
-        sm: '1.2rem',
+        sm: '1.4rem',
         xs: '1rem',
     },
 };

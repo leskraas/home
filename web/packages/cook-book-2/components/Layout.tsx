@@ -1,5 +1,7 @@
 import NextHead from 'next/head';
 import React from 'react';
+import styled from 'styled-components';
+import { NavBar } from './NavBar';
 
 interface IProps {
     title?: string;
@@ -30,8 +32,12 @@ export const Layout: React.FC<IProps> = ({ children, title, description }) => {
                     rel="stylesheet"
                 />
             </NextHead>
-            <nav>hei</nav>
-            <main>{children}</main>
+            <NavBar />
+            <Main>{children}</Main>
         </>
     );
 };
+
+const Main = styled.main`
+    padding-bottom: 80px;
+`;

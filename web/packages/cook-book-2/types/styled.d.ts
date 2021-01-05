@@ -19,6 +19,7 @@ declare module 'styled-components' {
         };
         shadows: {
             primary: string;
+            secondary: string;
         };
         borderRadius: {
             lg: string;

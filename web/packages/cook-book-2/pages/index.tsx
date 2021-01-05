@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from 'next';
-import Link from 'next/link';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Layout } from '../components/Layout';
+import { RecipeCard } from '../components/RecipeCard';
 import { getAllRecipeShort } from '../lib/sanity-queries';
 import * as t from '../types/sanity';
 
@@ -24,12 +24,7 @@ const Home: NextPage<Props> = (props) => {
     return (
         <Layout>
             {recipes?.map((recipe) => (
-                <Fragment key={recipe._id}>
-                    <Link href={'/oppskrift/' + recipe.slug.current} passHref>
-                        <a>{recipe.name}</a>
-                    </Link>
-                    <br />
-                </Fragment>
+                <RecipeCard recipe={recipe} key={recipe._id} />
             ))}
         </Layout>
     );
