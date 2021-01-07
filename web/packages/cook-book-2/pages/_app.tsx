@@ -25,7 +25,7 @@ const theme: DefaultTheme = {
         md: '10px',
         sm: '5px',
     },
-    fonts: ['Roboto', 'Helvetica', 'Verdana', 'sans-serif'],
+    fonts: ['Helvetica', 'Verdana', 'sans-serif'],
     fontSize: {
         xxl: '3rem',
         xl: '2.4rem',
@@ -57,6 +57,7 @@ const GlobalStyle = createGlobalStyle`
   }  
   html , body {
       height: 100%;
+      overflow: hidden;
   }
 `;
 

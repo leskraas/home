@@ -6,8 +6,7 @@ import Document, {
     NextScript,
 } from 'next/document';
 import React from 'react';
-import { ServerStyleSheet } from 'styled-components';
-import { GoogleFonts } from '../components/GoogleFonts';
+import styled, { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
     static async getInitialProps(ctx: DocumentContext) {
@@ -46,11 +45,6 @@ export default class MyDocument extends Document {
                     <meta name="theme-color" content={'#fff'} />
                     <meta name="keywords" content="kokebok, mat, oppskrifter" />
                     <link rel="manifest" href="/manifest.json" />
-                    <GoogleFonts
-                        googleFontUrl={
-                            'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap'
-                        }
-                    />
                 </Head>
                 <body>
                     <Main />
