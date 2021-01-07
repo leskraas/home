@@ -27,9 +27,22 @@ export const Layout: React.FC<IProps> = ({ children, title, description }) => {
                 {/*<link rel="icon" href="/static/favicon.ico" />*/}
                 <link rel="manifest" href="/manifest.json" />
                 {/*<link rel="stylesheet" href="https://use.typekit.net/pnf4qsl.css" />*/}
+
                 <link
+                    rel="preconnect"
+                    href="https://fonts.gstatic.com"
+                    crossOrigin="anonymous"
+                />
+                <link
+                    rel="preload"
+                    as="style"
                     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap"
+                />
+                <link
                     rel="stylesheet"
+                    media="print"
+                    onLoad="this.media='all'"
+                    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap"
                 />
             </NextHead>
             <NavBar />

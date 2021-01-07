@@ -23,7 +23,8 @@ export const RecipeCard: React.FC<Props> = (props) => {
                         quality={40}
                         src={urlFor(recipe.mainImage)
                             .fit('clip')
-                            .quality(60)
+                            .quality(80)
+                            .width(360)
                             .url()}
                     />
                 )}
