@@ -12,15 +12,15 @@ export const Layout: React.FC<IProps> = ({ children, title, description }) => {
     return (
         <>
             <NextHead>
-                <title>{title || ''}</title>
-                <meta name="description" content={description || ''} />
-                <meta name="theme-color" content={'#fff'} />
+                <title>{title || 'Din digitale kokebok'}</title>
                 <meta
                     name="description"
-                    content="Din digitale kokebok. Skriv ned dine
-                    egne oppskrifter eller søk etter andre sine,
-                    og skap din helt egen unike kokebok"
+                    content={
+                        description ||
+                        'Din digitale kokebok. Skriv ned dine egne oppskrifter eller søk etter andre sine, og skap din helt egen unike kokebok'
+                    }
                 />
+                <meta name="theme-color" content={'#fff'} />
                 <meta name="keywords" content="kokebok, mat, oppskrifter" />
                 {/*<link rel="icon" sizes="192x192" href="/static/images/icons-192.png" />*/}
                 {/*<link rel="apple-touch-icon" href="/static/images/icons-192.png" />*/}
